@@ -31,7 +31,9 @@
 				activeItem[0].className = "";
 			}
 			tocItem.className = "active";
-			tocItem.scrollIntoView();
+
+			//Align active element with top of page
+			// tocItem.scrollIntoView();
 		}
 
 		if(parsedData.chapters){
@@ -59,6 +61,8 @@
 				if(parsedData.chapters[i].slides){
 					//Starting with first slide _after_ first/cover slide
 					for(var u=1;u<parsedData.chapters[i].slides.length;u++){
+						var slideNum = document.createTextNode(i + "." + u);
+						var slideSmall = document.createElement("small");
 						var slideTitle = document.createTextNode(parsedData.chapters[i].slides[u].title);
 						var slideLink = document.createElement("a");
 						var slideItem = document.createElement("li");
@@ -67,8 +71,15 @@
 						slideLink.setAttribute("id", parsedData.chapters[i].slides[u].index);
 						slideLink.setAttribute("rel", parsedData.chapters[i].slides[u].index);
 						slideLink.setAttribute("class", "toc-slide");
+						slideSmall.appendChild(slideNum);
+
+						slideLink.appendChild(slideSmall);
 						slideLink.appendChild(slideTitle);
+
+						
+
 						slideItem.appendChild(slideLink);
+
 						slideSet.appendChild(slideItem);
 						chapterItem.appendChild(slideSet);
 					}
