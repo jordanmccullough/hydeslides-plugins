@@ -10,7 +10,9 @@
 		parentEvent = event;
 
 		var parsedData = JSON.parse(parentEvent.data),
+				tocChapter,
 				tocItem,
+				activeChapter,
 				activeItem,
 				toc,
 				slideSet,
@@ -22,15 +24,20 @@
 
 		//Update the TOC highlighting
 		if(parsedData.slide){
-			//Workaround for RevealJS hash-shortening for first slide
-			if(parsedData.slide.match('^/[0-9]$')){
-				// parsedData.slide = parsedData.slide + "/0";
-			}
+			tocChapter = document.getElementById(parsedData.slide.match('^/[0-9]')[0]);
 			tocItem = document.getElementById(parsedData.slide);
-			activeItem = document.getElementsByClassName("active");
-			if(activeItem[0]){
-				activeItem[0].className = "";
+
+			activeChapter = document.getElementsByClassName("active")[0];
+			activeItem = document.getElementsByClassName("active")[1];
+
+			if(activeChapter){
+				activeChapter.className = "";
 			}
+			if(activeItem){
+				activeItem.className = "";
+			}
+
+			tocChapter.className = "active";
 			tocItem.className = "active";
 
 			//Align active element with top of page
@@ -44,14 +51,11 @@
 			toc.innerHTML = "";
 
 			for(var i=0;i<parsedData.chapters.length;i++){
-
-
 				slideSet = document.createElement("ul");
 				chapterItem = document.createElement("li");
 				chapterLink = document.createElement("a");
 				chapterHeader = document.createElement("h1");
 				chapterTitle = document.createTextNode(parsedData.chapters[i].title);
-
 				chapterHeader.appendChild(chapterTitle);
 					chapterLink.setAttribute("href", "#/"+parsedData.chapters[i].index);
 					chapterLink.setAttribute("id", parsedData.chapters[i].index);
@@ -59,10 +63,6 @@
 					chapterLink.setAttribute("class", "toc-slide");
 				chapterLink.appendChild(chapterHeader);
 				chapterItem.appendChild(chapterLink);
-
-
-
-
 				toc.appendChild(chapterItem);
 
 				if(parsedData.chapters[i].slides){
@@ -87,14 +87,9 @@
 						slideLink.setAttribute("rel", parsedData.chapters[i].slides[u].index);
 						slideLink.setAttribute("class", "toc-slide");
 						slideSmall.appendChild(slideNum);
-
 						slideLink.appendChild(slideSmall);
 						slideLink.appendChild(slideTitle);
-
-						
-
 						slideItem.appendChild(slideLink);
-
 						slideSet.appendChild(slideItem);
 						chapterItem.appendChild(slideSet);
 					}

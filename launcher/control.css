@@ -92,6 +92,11 @@ a{text-decoration: none;}
 		margin-bottom: 1em;
 	}
 
+	.toc li input[type="checkbox"]::before{
+		content: '';
+		position: absolute;
+
+	}
 	.toc li input[type="checkbox"]{
 		position: absolute;
 		right: 2%;	
