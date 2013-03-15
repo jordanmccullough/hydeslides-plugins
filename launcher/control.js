@@ -12,16 +12,18 @@
 		var parsedData = JSON.parse(parentEvent.data),
 				tocItem,
 				activeItem,
-				chapterTitle,
-				chapterLink,
+				toc,
+				slideSet,
 				chapterItem,
-				toc;
+				chapterLink,
+				chapterHeader,
+				chapterTitle
 
 		//Update the TOC highlighting
 		if(parsedData.slide){
 			//Workaround for RevealJS hash-shortening for first slide
 			if(parsedData.slide.match('^/[0-9]$')){
-				parsedData.slide = parsedData.slide + "/0";
+				// parsedData.slide = parsedData.slide + "/0";
 			}
 			tocItem = document.getElementById(parsedData.slide);
 			activeItem = document.getElementsByClassName("active");
@@ -29,6 +31,7 @@
 				activeItem[0].className = "";
 			}
 			tocItem.className = "active";
+			tocItem.scrollIntoView();
 		}
 
 		if(parsedData.chapters){
@@ -38,17 +41,24 @@
 			toc.innerHTML = "";
 
 			for(var i=0;i<parsedData.chapters.length;i++){
-				var slideSet = document.createElement("ul");
-				var slideHeader = document.createElement("h1");
-				chapterTitle = document.createTextNode(parsedData.chapters[i].title);
+				slideSet = document.createElement("ul");
 				chapterItem = document.createElement("li");
-				slideHeader.appendChild(chapterTitle);
-				chapterItem.appendChild(slideHeader);
+				chapterLink = document.createElement("a");
+				chapterHeader = document.createElement("h1");
+				chapterTitle = document.createTextNode(parsedData.chapters[i].title);
+
+				chapterHeader.appendChild(chapterTitle);
+					chapterLink.setAttribute("href", "#/"+parsedData.chapters[i].index);
+					chapterLink.setAttribute("id", parsedData.chapters[i].index);
+					chapterLink.setAttribute("rel", parsedData.chapters[i].index);
+					chapterLink.setAttribute("class", "toc-slide");
+				chapterLink.appendChild(chapterHeader);
+				chapterItem.appendChild(chapterLink);
 				toc.appendChild(chapterItem);
 
 				if(parsedData.chapters[i].slides){
-					for(var u=0;u<parsedData.chapters[i].slides.length;u++){
-						
+					//Starting with first slide _after_ first/cover slide
+					for(var u=1;u<parsedData.chapters[i].slides.length;u++){
 						var slideTitle = document.createTextNode(parsedData.chapters[i].slides[u].title);
 						var slideLink = document.createElement("a");
 						var slideItem = document.createElement("li");

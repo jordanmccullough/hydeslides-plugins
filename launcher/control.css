@@ -11,6 +11,7 @@ html,body{
 	font-size: 12px;
 	background: #333;
 }
+a{text-decoration: none;}
 
 .panel{
 	width: auto;
@@ -49,32 +50,40 @@ html,body{
 	height: 100%;
 	width: 100%;
 }
-	.toc h1{
-		font-size: .75em;
-		margin:0;
-		padding:0;
-		padding: .5em;
-		background: #888;
-		text-transform:uppercase;
-		box-shadow: inset 0 0 5px 0 #666, 0 1px 0 0 #eee, inset 0 -1px 0 0 #777;
-		border-radius: .5em;
+	.toc a:hover{
 		color: #fff;
-		text-shadow: 1px 0px 1px #555; /*, 1px 1px 1px #444;*/
+		text-shadow: 0 0 3px #000;
 	}
+
+	.toc li li a:hover{
+		color: #000;
+		text-shadow: 0 0 1px #555;
+	}
+
+	.toc a h1{
+		background: #444;
+		color: #ddd;
+		margin: 0;
+		padding: 0;
+		font-size: 1em;
+		border-radius: .5em;
+		padding: .25em .25em .25em .5em;
+		-webkit-transition: background 300ms;
+	}
+		.toc a:hover h1{
+			color: #fff;
+		}
+		.toc a.active h1{
+			background: #9ecb2d;
+			color: #fff;
+		}
 	
 
 	.toc ul{
 		margin: 0;
 		padding: 0;
 	}
-	.toc ul::after{
-		content: '';
-		position: absolute;
-		top: .5em;
-		height: 100%;
-		box-shadow: 0 0 0 1px #ccc, 0 -10px 9px 1px #aaa;
-		border-radius: 50%;
-	}
+	
 	.toc > li{
 		font-weight: bold;
 		position: relative;
@@ -89,7 +98,7 @@ html,body{
 		padding: 0;
 		position: relative;
 	}
-	.toc a{
+	.toc li li a{
 		padding: 3px 0 3px 20%;
 		color: #555;
 		text-decoration: none;
@@ -100,7 +109,16 @@ html,body{
 		width: 85%;
 		text-shadow: 0 0 1px #eee;
 	}
-	.toc a::after{
+	.toc li li ul::after{
+		content: '';
+		position: absolute;
+		top: .5em;
+		height: 100%;
+		box-shadow: 0 0 0 1px #ccc, 0 -10px 9px 1px #aaa;
+		border-radius: 50%;
+	}
+
+	.toc li li a::after{
 		content: '';
 		position: absolute;
 		left: 0;
@@ -110,14 +128,11 @@ html,body{
 		box-shadow: 0 0 0 1px #ccc;
 		border-radius: 50%;
 	}
-	.toc a:hover{
-		color: #000;
-		text-shadow: 0 0 1px #555;
-	}
-	.toc .active::after{
+	
+	.toc li li .active::after{
 		box-shadow: none;
 	}
-	.toc .active, .toc .active:hover{
+	.toc li li .active, .toc li li .active:hover{
 		text-shadow: 0 0 1px #555;
 		padding-left: 25%;
 		color: #fff;
@@ -126,7 +141,7 @@ html,body{
 		background: #9ecb2d;
 
 	}
-	.toc .active::before{
+	.toc li li .active::before{
 		content: '';
 		position: absolute;
 		/*left: -6px;*/
