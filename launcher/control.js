@@ -24,7 +24,7 @@
 
 		//Update the TOC highlighting
 		if(parsedData.slide){
-			tocChapter = document.getElementById(parsedData.slide.match('^/[0-9]')[0]);
+			tocChapter = document.getElementById(parsedData.slide.match('^/[0-9]*')[0]);
 			tocItem = document.getElementById(parsedData.slide);
 
 			activeChapter = document.getElementsByClassName("active")[0];
@@ -97,8 +97,11 @@
 			}
 
 			var a, allToc = document.getElementsByClassName("toc-slide");
+			console.log(allToc);
 			for(a in allToc){
-				allToc[a].addEventListener("click", control.jumpToSlide, false);
+				if(allToc[a].tagName && allToc[a].tagName === "A"){
+					allToc[a].addEventListener("click", control.jumpToSlide, false);
+				}
 			}
 		}
 	};
