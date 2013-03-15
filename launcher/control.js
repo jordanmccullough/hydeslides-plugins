@@ -17,7 +17,8 @@
 				chapterItem,
 				chapterLink,
 				chapterHeader,
-				chapterTitle
+				chapterTitle,
+				chapterCheck;
 
 		//Update the TOC highlighting
 		if(parsedData.slide){
@@ -43,6 +44,8 @@
 			toc.innerHTML = "";
 
 			for(var i=0;i<parsedData.chapters.length;i++){
+
+
 				slideSet = document.createElement("ul");
 				chapterItem = document.createElement("li");
 				chapterLink = document.createElement("a");
@@ -56,9 +59,21 @@
 					chapterLink.setAttribute("class", "toc-slide");
 				chapterLink.appendChild(chapterHeader);
 				chapterItem.appendChild(chapterLink);
+
+
+
+
 				toc.appendChild(chapterItem);
 
 				if(parsedData.chapters[i].slides){
+					//Collapse Menu Option
+					if(parsedData.chapters[i].slides.length > 1){
+						chapterCheck = document.createElement("input");
+						chapterCheck.setAttribute("type", "checkbox");
+						chapterCheck.setAttribute("checked", "checked");
+						chapterItem.appendChild(chapterCheck);
+					}
+
 					//Starting with first slide _after_ first/cover slide
 					for(var u=1;u<parsedData.chapters[i].slides.length;u++){
 						var slideNum = document.createTextNode(i + "." + u);
