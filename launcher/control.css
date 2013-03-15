@@ -75,7 +75,7 @@ a{text-decoration: none;}
 			color: #fff;
 		}
 		.toc a.active h1{
-			background: #9ecb2d;
+			background: #81a624;
 			color: #fff;
 		}
 	
@@ -131,7 +131,7 @@ a{text-decoration: none;}
 		-webkit-transition: padding 200ms, margin 200ms, background 300ms;
 		display: inline-block;
 		text-transform: lowercase;
-		width: 75%;
+		width: 85%;
 		text-shadow: 0 0 1px #eee;
 	}
 
@@ -140,7 +140,6 @@ a{text-decoration: none;}
 		padding-left: 15%;
 		color: #fff;
 		text-decoration:none;
-
 		background: #9ecb2d;
 
 	}
