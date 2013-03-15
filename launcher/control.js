@@ -10,25 +10,38 @@
 		parentEvent = event;
 
 		var parsedData = JSON.parse(parentEvent.data),
+				tocChapter,
 				tocItem,
+				activeChapter,
 				activeItem,
-				chapterTitle,
-				chapterLink,
+				toc,
+				slideSet,
 				chapterItem,
-				toc;
+				chapterLink,
+				chapterHeader,
+				chapterTitle,
+				chapterCheck;
 
 		//Update the TOC highlighting
 		if(parsedData.slide){
-			//Workaround for RevealJS hash-shortening for first slide
-			if(parsedData.slide.match('^/[0-9]$')){
-				parsedData.slide = parsedData.slide + "/0";
-			}
+			tocChapter = document.getElementById(parsedData.slide.match('^/[0-9]')[0]);
 			tocItem = document.getElementById(parsedData.slide);
-			activeItem = document.getElementsByClassName("active");
-			if(activeItem[0]){
-				activeItem[0].className = "";
+
+			activeChapter = document.getElementsByClassName("active")[0];
+			activeItem = document.getElementsByClassName("active")[1];
+
+			if(activeChapter){
+				activeChapter.className = "";
 			}
+			if(activeItem){
+				activeItem.className = "";
+			}
+
+			tocChapter.className = "active";
 			tocItem.className = "active";
+
+			//Align active element with top of page
+			// tocItem.scrollIntoView();
 		}
 
 		if(parsedData.chapters){
@@ -38,17 +51,33 @@
 			toc.innerHTML = "";
 
 			for(var i=0;i<parsedData.chapters.length;i++){
-				var slideSet = document.createElement("ul");
-				var slideHeader = document.createElement("h1");
-				chapterTitle = document.createTextNode(parsedData.chapters[i].title);
+				slideSet = document.createElement("ul");
 				chapterItem = document.createElement("li");
-				slideHeader.appendChild(chapterTitle);
-				chapterItem.appendChild(slideHeader);
+				chapterLink = document.createElement("a");
+				chapterHeader = document.createElement("h1");
+				chapterTitle = document.createTextNode(parsedData.chapters[i].title);
+				chapterHeader.appendChild(chapterTitle);
+					chapterLink.setAttribute("href", "#/"+parsedData.chapters[i].index);
+					chapterLink.setAttribute("id", parsedData.chapters[i].index);
+					chapterLink.setAttribute("rel", parsedData.chapters[i].index);
+					chapterLink.setAttribute("class", "toc-slide");
+				chapterLink.appendChild(chapterHeader);
+				chapterItem.appendChild(chapterLink);
 				toc.appendChild(chapterItem);
 
 				if(parsedData.chapters[i].slides){
-					for(var u=0;u<parsedData.chapters[i].slides.length;u++){
-						
+					//Collapse Menu Option
+					if(parsedData.chapters[i].slides.length > 1){
+						chapterCheck = document.createElement("input");
+						chapterCheck.setAttribute("type", "checkbox");
+						chapterCheck.setAttribute("checked", "checked");
+						chapterItem.appendChild(chapterCheck);
+					}
+
+					//Starting with first slide _after_ first/cover slide
+					for(var u=1;u<parsedData.chapters[i].slides.length;u++){
+						var slideNum = document.createTextNode(i + "." + u);
+						var slideSmall = document.createElement("small");
 						var slideTitle = document.createTextNode(parsedData.chapters[i].slides[u].title);
 						var slideLink = document.createElement("a");
 						var slideItem = document.createElement("li");
@@ -57,6 +86,8 @@
 						slideLink.setAttribute("id", parsedData.chapters[i].slides[u].index);
 						slideLink.setAttribute("rel", parsedData.chapters[i].slides[u].index);
 						slideLink.setAttribute("class", "toc-slide");
+						slideSmall.appendChild(slideNum);
+						slideLink.appendChild(slideSmall);
 						slideLink.appendChild(slideTitle);
 						slideItem.appendChild(slideLink);
 						slideSet.appendChild(slideItem);
