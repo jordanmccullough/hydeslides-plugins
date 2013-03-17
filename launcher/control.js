@@ -76,7 +76,7 @@
 
 					//Starting with first slide _after_ first/cover slide
 					for(var u=1;u<parsedData.chapters[i].slides.length;u++){
-						var slideNum = document.createTextNode(i + "." + u);
+						var slideNum = document.createTextNode((i+1) + "." + u);
 						var slideSmall = document.createElement("small");
 						var slideTitle = document.createTextNode(parsedData.chapters[i].slides[u].title);
 						var slideLink = document.createElement("a");
