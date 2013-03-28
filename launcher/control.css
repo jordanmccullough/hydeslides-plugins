@@ -36,19 +36,16 @@ a{text-decoration: none;}
 	position: absolute;
 }
 
-.notes{
-}
-
 .toc{
 	float: left;
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 	
-	overflow-y: auto;
-	overflow-x: hidden;
+	/*overflow-y: auto;*/
+	/*overflow-x: hidden;*/
 	height: 100%;
-	width: 100%;
+	width: 50%;
 }
 	.toc a:hover{
 		color: #fff;
@@ -71,6 +68,7 @@ a{text-decoration: none;}
 		-webkit-transition: background 300ms, padding 300ms;
 		margin-bottom: 1px;
 		box-shadow: 0 0 0 1px #888, 0 0 10px 0 #666;
+		border-radius: 0 .5em .5em 0 / 0 .5em .5em 0;
 	}
 		.toc a:hover h1{
 			color: #fff;
@@ -90,7 +88,6 @@ a{text-decoration: none;}
 	.toc > li{
 		font-weight: bold;
 		position: relative;
-		overflow: hidden;
 	}
 
 	.toc li input[type="checkbox"]::before{
@@ -115,7 +112,7 @@ a{text-decoration: none;}
 		margin: auto auto auto 0%;
 		width: 100%;
 		padding: 0;
-		position: relative;
+		/*position: relative;*/
 	}
 	.toc li small{
 		float: left;
@@ -124,6 +121,40 @@ a{text-decoration: none;}
 		color: #000;
 		opacity: .4;
 	}
+
+	.toc li li{
+		position: relative;
+	}
+
+
+	/*Notes*/
+	.toc li aside{
+		visibility: hidden;
+		top: 0;
+		left: 100%;
+		width: 96%;
+		padding: 2%;
+		background: #ffffff;
+		position: absolute;
+		border-radius: .5em;
+		box-shadow: 0 0 .25em #999;
+	}
+	.toc li a.active + aside{
+		visibility: visible;
+		
+	}
+	.toc li aside::before{
+		content:'';
+		position: absolute;
+		height:0;
+		width:0;
+		left: -.75em;
+		border-top: 8px solid transparent;
+		border-bottom: 8px solid transparent; 
+		border-right: 8px solid #999;
+	}
+
+
 	.toc li li a{
 		padding: 3px 0 3px 5%;
 		color: #555;

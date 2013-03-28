@@ -20,7 +20,8 @@
 				chapterLink,
 				chapterHeader,
 				chapterTitle,
-				chapterCheck;
+				chapterCheck,
+				chapterNotes;
 
 		//Update the TOC highlighting
 		if(parsedData.slide){
@@ -56,6 +57,8 @@
 				chapterLink = document.createElement("a");
 				chapterHeader = document.createElement("h1");
 				chapterTitle = document.createTextNode(parsedData.chapters[i].title);
+				chapterNotes = document.createElement("aside");
+
 				chapterHeader.appendChild(chapterTitle);
 					chapterLink.setAttribute("href", "#/"+parsedData.chapters[i].index);
 					chapterLink.setAttribute("id", parsedData.chapters[i].index);
@@ -63,6 +66,13 @@
 					chapterLink.setAttribute("class", "toc-slide");
 				chapterLink.appendChild(chapterHeader);
 				chapterItem.appendChild(chapterLink);
+
+				if(parsedData.chapters[i].notes){
+					chapterNotes.innerHTML = parsedData.chapters[i].notes;
+					chapterItem.appendChild(chapterNotes);
+				}
+
+
 				toc.appendChild(chapterItem);
 
 				if(parsedData.chapters[i].slides){
@@ -81,15 +91,21 @@
 						var slideTitle = document.createTextNode(parsedData.chapters[i].slides[u].title);
 						var slideLink = document.createElement("a");
 						var slideItem = document.createElement("li");
+						var slideNotes = document.createElement("aside");
 
 						slideLink.setAttribute("href", "#/"+parsedData.chapters[i].slides[u].index);
 						slideLink.setAttribute("id", parsedData.chapters[i].slides[u].index);
 						slideLink.setAttribute("rel", parsedData.chapters[i].slides[u].index);
 						slideLink.setAttribute("class", "toc-slide");
+						
 						slideSmall.appendChild(slideNum);
 						slideLink.appendChild(slideSmall);
 						slideLink.appendChild(slideTitle);
 						slideItem.appendChild(slideLink);
+						if(parsedData.chapters[i].slides[u].notes){
+							slideNotes.innerHTML = parsedData.chapters[i].slides[u].notes;
+							slideItem.appendChild(slideNotes);
+						}
 						slideSet.appendChild(slideItem);
 						chapterItem.appendChild(slideSet);
 					}
