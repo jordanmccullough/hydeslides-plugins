@@ -101,9 +101,11 @@ a{text-decoration: none;}
 	}
 	.toc li input[type="checkbox"] + ul{
 		height: 0;
+		overflow:hidden;
 	}
 	.toc li input[type="checkbox"]:checked + ul{
 		height: auto;
+		overflow: visible;
 	}	
 
 	.toc ul li{
@@ -112,7 +114,6 @@ a{text-decoration: none;}
 		margin: auto auto auto 0%;
 		width: 100%;
 		padding: 0;
-		/*position: relative;*/
 	}
 	.toc li small{
 		float: left;
@@ -123,6 +124,7 @@ a{text-decoration: none;}
 	}
 
 	.toc li li{
+		width: auto;
 		position: relative;
 	}
 
@@ -152,6 +154,13 @@ a{text-decoration: none;}
 		border-top: 8px solid transparent;
 		border-bottom: 8px solid transparent; 
 		border-right: 8px solid #999;
+	}
+	.toc aside ul{
+		margin: auto;
+	}
+	.toc aside li{
+		list-style-type: disc;
+		margin: 0 .25em 0 1.5em;
 	}
 
 
