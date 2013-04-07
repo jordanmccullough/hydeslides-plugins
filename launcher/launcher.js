@@ -63,6 +63,25 @@
 		var chapterIndex = 0;
 		var slideIndex = 0;
 
+		//Verify this is a RevealJS slidedeck
+		var revealJsDeck = document.getElementsByClassName("reveal");
+			impressJsDeck = document.getElementsByClassName("impress-enabled");
+		
+		console.log("reveal...");
+		console.log(revealJsDeck);
+		console.log("impress...");
+		console.log(impressJsDeck);
+
+		if(revealJsDeck){
+			console.log("revealJS slide deck detected");
+		}
+		if(impressJsDeck){
+			console.log("impressJs slide deck detected");
+		}
+
+
+
+
 		chaptersLoop:
 		for(chapterIndex=0;chapterIndex<chaptersRaw.length;chapterIndex++){
 			if(chaptersRaw[chapterIndex].className && chaptersRaw[chapterIndex].className.indexOf("stack") != -1){
@@ -153,9 +172,6 @@
 				chapterCount++;
 			}
 		}
-
-		console.log(chaptersJSON);
-
 		return chaptersJSON;
 	};
 
