@@ -56,6 +56,57 @@
 	};
 
 	launcher.parseStructure = function(){
+
+		console.log("parseStructure started...");
+
+		// Test for ID indicator of slide framework
+		var slideDeckType = document.getElementById("impress") ? "impress" : slideDeckType;
+		slideDeckType = document.getElementById("reveal") ? "reveal" : slideDeckType;
+
+		switch(slideDeckType){
+			case "impress":
+				//Parse ImpressJS
+				return launcher.parseImpressJS();
+			break;
+			case "reveal":
+				//Parse RevealJS
+				return launcher.parseRevealJS();		
+			break;
+			default:
+				return false;
+		}
+	};
+
+	launcher.parseImpressJS = function(){
+		var slides = document.getElementsByClassName("slide"),
+			chaptersJSON = {chapters:[]};
+
+		console.log("Cover array:");
+		// console.log(chapters);
+
+		for(var i=0;i<slides.length;i++){
+
+
+			// console.log("slide " + i);
+			console.log(slides[i]);
+			if(slides[i].className.indexOf("cover")){
+				chaptersJSON.chapters.push({
+					"index": "/",
+					"title": "chapter " + i,
+					"slides": []
+				});
+			}
+			// console.log(slides[i].childNodes);
+
+			// chapters[i].
+		}
+
+		console.log(chaptersJSON);
+
+		return false;
+	};
+
+	launcher.parseRevealJS = function(){
 		var chaptersRaw = document.getElementsByTagName("section");
 		var chapterCount = 0;
 		var chaptersJSON = {chapters:[]};
@@ -94,8 +145,6 @@
 				});
 
 				for(slideIndex=chapterIndex+1; slideIndex<chaptersRaw.length; slideIndex++){
-
-					console.log("loopgin...");
 
 					var slideChildren = chaptersRaw[slideIndex].childNodes;
 					var slideTitle = "No Title";
@@ -154,8 +203,6 @@
 			}
 		}
 
-		console.log(chaptersJSON);
-
 		return chaptersJSON;
 	};
 
@@ -164,6 +211,8 @@
 		controller.display.postMessage(JSON.stringify(launcher.parseStructure()), host+'/dependencies/plugins/launcher/control.html');
 		controller.display.postMessage(JSON.stringify(launcher.formatHash()), host+'/dependencies/plugins/launcher/control.html');
 	};
+
+	launcher.parseStructure();
 
 	launcher.launchControl = function(){
 		//Warning! IE-unfriendly event binding
