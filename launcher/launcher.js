@@ -56,9 +56,6 @@
 			}
 		}
 
-		console.log("change slide.....");
-		console.log(data.slide);
-
 		//Slide Change Event
 		if(data.slide){
 			window.location.hash = data.slide;
@@ -96,14 +93,37 @@
 		var slides = document.getElementsByClassName("slide"),
 			chaptersJSON = {chapters:[]};
 
+		var chapterTitle = "";
+
 		for(var i=0;i<slides.length;i++){
-			if(slides[i].className.indexOf("cover")){
+
+			var slideChildren = slides[i].childNodes;
+
+
+
+			chapterTitle = "Slide " + i;
+
+
+			for(var m=0;m<slideChildren.length;m++){
+				var chapterTag = slideChildren[m];
+				if(chapterTag.tagName){
+					if(chapterTag.tagName.match('^(H[1-3])')){
+						chapterTitle = (i) + ": " + slideChildren[m].outerText;
+					}
+				}
+			}
+
+
+
+
+			// if(slides[i].className.indexOf("slide")){
+
 				chaptersJSON.chapters.push({
 					"index": "/" + slides[i].id,
-					"title": "chapter " + i,
+					"title": chapterTitle,
 					"slides": []
 				});
-			}
+			// }
 		}
 
 		return chaptersJSON;
