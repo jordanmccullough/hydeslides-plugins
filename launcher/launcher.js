@@ -1,5 +1,7 @@
 (function(){
-	var launcher = {},
+	var launcher = {
+		slideDeckType: ""
+	},
 			controller = {};
 
 	launcher.keyDown = function(event){
@@ -12,9 +14,13 @@
 	};
 
 	launcher.formatHash = function(){
+		console.log("Format hash");
 		//Trim off the # from RevealJS hashing pattern
-		var slideNum = (window.location.hash).match('/([0-9]).*');
-		var data = {"slide": slideNum ? slideNum[0] : "/0/0" };
+		// var slideNum = (window.location.hash).match('[\#]');
+		var hash = window.location.hash;
+		var slideNum = hash.substring(2,hash.length);
+		var data = {"slide": slideNum}; //? slideNum[0] : "/0/0" };
+		console.log(data);
 		return data;
 	};
 
@@ -30,21 +36,23 @@
 	launcher.receive = function(event){
 		var data = JSON.parse(event.data);
 
-		if(data.direction){
-			console.log("action event sent");
-			switch(data.direction){
-				case "right":
-					Reveal.right();
-					break;
-				case "left":
-					Reveal.left();
-					break;
-				case "up":
-					Reveal.up();
-					break;
-				case "down":
-					Reveal.down();
-					break;
+		if(launcher.slideDeckType === "reveal"){
+			if(data.direction){
+				console.log("action event sent");
+				switch(data.direction){
+					case "right":
+						Reveal.right();
+						break;
+					case "left":
+						Reveal.left();
+						break;
+					case "up":
+						Reveal.up();
+						break;
+					case "down":
+						Reveal.down();
+						break;
+				}
 			}
 		}
 
@@ -52,10 +60,76 @@
 		if(data.slide){
 			window.location.hash = data.slide;
 		}
-
 	};
 
 	launcher.parseStructure = function(){
+
+		console.log("parseStructure started...");
+
+		// Test for ID indicator of slide framework
+		var slideDeckType = document.getElementById("impress") ? "impress" : slideDeckType;
+		slideDeckType = document.getElementById("reveal") ? "reveal" : slideDeckType;
+
+		switch(slideDeckType){
+			case "impress":
+				//Parse ImpressJS
+				launcher.slideDeckType = "impress";
+				console.log("returning ImpressJS parse structure");
+				console.log(launcher.parseImpressJS());
+				return launcher.parseImpressJS();
+			break;
+			case "reveal":
+				//Parse RevealJS
+				launcher.slideDeckType = "reveal";
+				console.log("returning RevealJS parse structure");
+				return launcher.parseRevealJS();		
+			break;
+			default:
+				return false;
+		}
+	};
+
+	launcher.parseImpressJS = function(){
+		var slides = document.getElementsByClassName("slide"),
+			chaptersJSON = {chapters:[]};
+
+		var chapterTitle = "";
+
+		for(var i=0;i<slides.length;i++){
+
+			var slideChildren = slides[i].childNodes;
+
+
+
+			chapterTitle = "Slide " + i;
+
+
+			for(var m=0;m<slideChildren.length;m++){
+				var chapterTag = slideChildren[m];
+				if(chapterTag.tagName){
+					if(chapterTag.tagName.match('^(H[1-3])')){
+						chapterTitle = (i) + ": " + slideChildren[m].outerText;
+					}
+				}
+			}
+
+
+
+
+			// if(slides[i].className.indexOf("slide")){
+
+				chaptersJSON.chapters.push({
+					"index": "/" + slides[i].id,
+					"title": chapterTitle,
+					"slides": []
+				});
+			// }
+		}
+
+		return chaptersJSON;
+	};
+
+	launcher.parseRevealJS = function(){
 		var chaptersRaw = document.getElementsByTagName("section");
 		var chapterCount = 0;
 		var chaptersJSON = {chapters:[]};
@@ -94,8 +168,6 @@
 				});
 
 				for(slideIndex=chapterIndex+1; slideIndex<chaptersRaw.length; slideIndex++){
-
-					console.log("loopgin...");
 
 					var slideChildren = chaptersRaw[slideIndex].childNodes;
 					var slideTitle = "No Title";
@@ -154,8 +226,6 @@
 			}
 		}
 
-		console.log(chaptersJSON);
-
 		return chaptersJSON;
 	};
 
@@ -164,6 +234,8 @@
 		controller.display.postMessage(JSON.stringify(launcher.parseStructure()), host+'/dependencies/plugins/launcher/control.html');
 		controller.display.postMessage(JSON.stringify(launcher.formatHash()), host+'/dependencies/plugins/launcher/control.html');
 	};
+
+	launcher.parseStructure();
 
 	launcher.launchControl = function(){
 		//Warning! IE-unfriendly event binding

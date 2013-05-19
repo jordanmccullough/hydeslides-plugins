@@ -25,7 +25,7 @@
 
 		//Update the TOC highlighting
 		if(parsedData.slide){
-			tocChapter = document.getElementById(parsedData.slide.match('^/[0-9]*')[0]);
+			tocChapter = document.getElementById(parsedData.slide);
 			tocItem = document.getElementById(parsedData.slide);
 
 			activeChapter = document.getElementsByClassName("active")[0];
@@ -38,8 +38,8 @@
 				activeItem.className = "";
 			}
 
-			tocChapter.className = "active";
-			tocItem.className = "active";
+			// tocChapter.className = "active";
+			// tocItem.className = "active";
 
 			//Align active element with top of page
 			// tocItem.scrollIntoView();
@@ -127,6 +127,8 @@
 	};
 
 	control.jumpToSlide = function(event){
+		console.log("click-----");
+		console.log(this.rel);
 		control.sendMessage({slide: this.rel});
 	};
 
