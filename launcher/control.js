@@ -10,41 +10,19 @@
 		parentEvent = event;
 
 		var parsedData = JSON.parse(parentEvent.data),
-				tocChapter,
-				tocItem,
-				activeChapter,
-				activeItem,
-				toc,
-				slideSet,
-				chapterItem,
-				chapterLink,
-				chapterHeader,
-				chapterTitle,
-				chapterCheck,
-				chapterNotes;
-
-		//Update the TOC highlighting
-		if(parsedData.slide){
-			tocChapter = document.getElementById(parsedData.slide);
-			tocItem = document.getElementById(parsedData.slide);
-
-			activeChapter = document.getElementsByClassName("active")[0];
-			activeItem = document.getElementsByClassName("active")[1];
-
-			if(activeChapter){
-				activeChapter.className = "";
-			}
-			if(activeItem){
-				activeItem.className = "";
-			}
-
-			// tocChapter.className = "active";
-			// tocItem.className = "active";
-
-			//Align active element with top of page
-			// tocItem.scrollIntoView();
-		}
-
+			tocChapter,
+			tocItem,
+			activeChapter,
+			activeItem,
+			toc,
+			slideSet,
+			chapterItem,
+			chapterLink,
+			chapterHeader,
+			chapterTitle,
+			chapterCheck,
+			chapterNotes;
+			
 		if(parsedData.chapters){
 			toc = document.getElementById("toc");
 
@@ -120,6 +98,33 @@
 				}
 			}
 		}
+
+		//Update the TOC highlighting
+		if(parsedData.slide){
+			tocChapter = document.getElementById(parsedData.slide);
+			tocItem = document.getElementById(parsedData.slide);
+
+			activeChapter = document.getElementsByClassName("active")[0];
+			activeItem = document.getElementsByClassName("active")[1];
+
+			console.log("ActiveChapter");
+			console.log(activeChapter);
+			console.log("ActiveItem");
+			console.log(activeItem);
+
+			if(activeChapter){
+				activeChapter.className = "";
+			}
+			if(activeItem){
+				activeItem.className = "";
+			}
+
+			tocChapter.className = "active";
+			tocItem.className = "active";
+
+			//Align active element with top of page
+			// tocItem.scrollIntoView();
+		}
 	};
 
 	control.sendMessage = function(data){
@@ -127,8 +132,6 @@
 	};
 
 	control.jumpToSlide = function(event){
-		console.log("click-----");
-		console.log(this.rel);
 		control.sendMessage({slide: this.rel});
 	};
 
