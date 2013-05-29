@@ -50,7 +50,6 @@
 					chapterItem.appendChild(chapterNotes);
 				}
 
-
 				toc.appendChild(chapterItem);
 
 				if(parsedData.chapters[i].slides){
@@ -91,7 +90,6 @@
 			}
 
 			var a, allToc = document.getElementsByClassName("toc-slide");
-			console.log(allToc);
 			for(a in allToc){
 				if(allToc[a].tagName && allToc[a].tagName === "A"){
 					allToc[a].addEventListener("click", control.jumpToSlide, false);
@@ -101,16 +99,11 @@
 
 		//Update the TOC highlighting
 		if(parsedData.slide){
-			tocChapter = document.getElementById(parsedData.slide);
-			tocItem = document.getElementById(parsedData.slide);
+			tocChapter = document.getElementById("/"+parsedData.slide);
+			tocItem = document.getElementById("/"+parsedData.slide);
 
 			activeChapter = document.getElementsByClassName("active")[0];
 			activeItem = document.getElementsByClassName("active")[1];
-
-			console.log("ActiveChapter");
-			console.log(activeChapter);
-			console.log("ActiveItem");
-			console.log(activeItem);
 
 			if(activeChapter){
 				activeChapter.className = "";

@@ -32,7 +32,6 @@
 
         if(launcher.slideDeckType === "reveal"){
             if(data.direction){
-                console.log("action event sent");
                 switch(data.direction){
                     case "right":
                         Reveal.right();
@@ -204,8 +203,12 @@
 
     launcher.popControl = function(){
         var host = window.location.origin;
-        controller.display.postMessage(JSON.stringify(launcher.parseStructure()), host+'/dependencies/plugins/launcher/control.html');
-        controller.display.postMessage(JSON.stringify(launcher.formatHash()), host+'/dependencies/plugins/launcher/control.html');
+        controller.display.postMessage(
+          JSON.stringify({
+            "chapters": launcher.parseStructure().chapters,
+            "slide": launcher.formatHash().slide
+          }), host+'/dependencies/plugins/launcher/control.html'
+        );
     };
 
     launcher.parseStructure();
