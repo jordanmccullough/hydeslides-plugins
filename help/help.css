@@ -4,7 +4,6 @@
     left: 0;
     z-index: 10000;
     width: 60%;
-    height: 60%;
     display: table;
     left: 20%;
     top: 20%;
@@ -17,10 +16,30 @@
     padding: 3%;
     margin: 0 auto;
     border-radius: .25em;
-    box-shadow: 0 0 0 2px #666;
+    box-shadow: 0 0 0 2px #888, 0 0 1.5em #666;
     background: white;
     background: rgba(255,255,255,.95);
 }
+
+#help ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    color: #555;
+}
+    #help ul code{
+        color: #fff;
+        font-size: .75em;
+        line-height: 1.5em;
+        display: inline-block;
+        text-align: center;
+        background: #444;
+        border-radius: .25em;
+        padding: 0 .25em;
+        min-width: 1em;
+        height: 1.5em;
+    }
+
 .help-hidden{
     opacity: 0;
 }

@@ -46,12 +46,15 @@
     //Inline HTML to keep things simple
     helpContent.innerHTML =
         "<ul>" +
-            "<li><code>ESC</code> Big-Picture Slides View</li>" +
+            "<h1>Keyboard Shortcuts</h1>" +
+            "<hr>" +
+            "<li><code>Esc</code> Big-Picture Slides View</li>" +
             "<li><code>C</code> Table of Contents Browser</li>" +
+            "<li><code>S</code> What's Next Split View</li>" +
+            "<li><code>&#x2191;</code> Previous slide, previous build step</li>" +
+            "<li><code>&#x2192;</code> Next chapter, next build step</li>" +
+            "<li><code>&#x2193;</code> Next slide, next build step</li>" +
+            "<li><code>&#x2190;</code> Previous chapter, previous build setp</li>" +
             "<li><code>?</code> Hide/Show Help</li>" +
-        "</ul>";
-    
-
-
-    
+        "</ul>";    
 })();
