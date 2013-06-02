@@ -16,7 +16,7 @@
                 helpTarget.setAttribute("class");
             }
             else{
-                helpTarget.setAttribute("class", "hidden");
+                helpTarget.setAttribute("class", "help-hidden");
             }
         }
     };
@@ -38,7 +38,7 @@
 
     //Build & Insert Help Tag
     helpContainer.setAttribute("id", "help");
-    helpContainer.setAttribute("class", "hidden");
+    helpContainer.setAttribute("class", "help-hidden");
     helpContent.setAttribute("id", "help-content");
     helpContainer.appendChild(helpContent);
     bodyTag.appendChild(helpContainer);
