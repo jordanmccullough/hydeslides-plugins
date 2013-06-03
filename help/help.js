@@ -54,7 +54,7 @@
             "<li><code>&#x2191;</code> Previous slide, previous build step</li>" +
             "<li><code>&#x2192;</code> Next chapter, next build step</li>" +
             "<li><code>&#x2193;</code> Next slide, next build step</li>" +
-            "<li><code>&#x2190;</code> Previous chapter, previous build setp</li>" +
+            "<li><code>&#x2190;</code> Previous chapter, previous build step</li>" +
             "<li><code>?</code> Hide/Show Help</li>" +
         "</ul>";    
 })();
