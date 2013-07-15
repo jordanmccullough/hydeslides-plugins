@@ -99,7 +99,7 @@
 
 		//Update the TOC highlighting
 		if(parsedData.slide){
-			tocChapter = document.getElementById("/"+parsedData.slide);
+			tocChapter = document.getElementById("/"+(parsedData.slide).match(/^([0-9]*)/)[0]);
 			tocItem = document.getElementById("/"+parsedData.slide);
 
 			activeChapter = document.getElementsByClassName("active")[0];
