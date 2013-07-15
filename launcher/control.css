@@ -178,10 +178,7 @@ a{text-decoration: none;}
 
 	.toc li li .active, .toc li li .active:hover{
 		text-shadow: 0 0 1px #555;
-		/*padding-left: 15%;*/
 		color: #000;
 		text-decoration:none;
-		/*background: #9ecb2d;*/
 		border-left: 10px solid #1071BE;
-
 	}
