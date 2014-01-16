@@ -1,26 +1,64 @@
 (function(){
+
+
     var headTag = document.getElementsByTagName("head")[0];
         bodyTag = document.getElementsByTagName("body")[0];
         cssTag = document.createElement("link");
         helpContainer = document.createElement("div");
         helpContent = document.createElement("div");
+        helpToc = document.createElement("div");
+        helpToc.setAttribute("class", "toc");
         execScript = document.getElementsByTagName("script");
+        countdown = document.createElement("div");
+        countdown.setAttribute("class", "countdown");
         execPath = "";
 
     //Setup key event handling and listener
     var services = {};
-    services.showHide = function(event){
-        var helpTarget = document.getElementById("help");
-        if(event.shiftKey && event.keyCode === 191){
-            if(helpTarget.getAttribute("class").match("hidden")){
-                helpTarget.setAttribute("class");
-            }
-            else{
-                helpTarget.setAttribute("class", "help-hidden");
-            }
-        }
+    services.timer = -1;
+    services.interval = -1;
+
+    services.toggle = function(event){
+      if(event.shiftKey && event.keyCode === 191){
+        services.showHide();
+        services.refreshCountdown(0);
+      }
     };
-    document.addEventListener("keydown", services.showHide, false);
+    services.showHide = function(seconds){
+      var helpTarget = document.getElementById("help");
+
+      if(seconds){
+        services.timer = setTimeout(function(){
+          services.showHide();
+        }, seconds*1000);
+
+        services.refreshCountdown(seconds);
+      }
+
+      if(helpTarget.getAttribute("class").match("hidden")){
+          helpTarget.setAttribute("class");
+      }
+      else{
+          helpTarget.setAttribute("class", "help-hidden");
+      }
+    };
+
+    services.refreshCountdown = function(seconds){
+      if(seconds){
+        services.interval = setInterval(function(){
+          if(seconds > 0){
+            countdown.innerHTML = "Automatically hiding in " + --seconds;
+          }
+        }, 1000);
+      }
+      else{
+        clearTimeout(services.timer);
+        clearInterval(services.interval);
+        countdown.innerHTML = "";
+      }
+    };
+
+    document.addEventListener("keydown", services.toggle, false);
 
     //Determine path of Help execution path
     for(var i=0;i<execScript.length;i++){
@@ -41,10 +79,13 @@
     helpContainer.setAttribute("class", "help-hidden");
     helpContent.setAttribute("id", "help-content");
     helpContainer.appendChild(helpContent);
+    helpContent.appendChild(helpToc);
+    helpContent.appendChild(countdown);
     bodyTag.appendChild(helpContainer);
 
+
     //Inline HTML to keep things simple
-    helpContent.innerHTML =
+    helpToc.innerHTML =
         "<ul>" +
             "<h1>Keyboard Shortcuts</h1>" +
             "<hr>" +
@@ -56,5 +97,8 @@
             "<li><code>&#x2193;</code> Next slide, next build step</li>" +
             "<li><code>&#x2190;</code> Previous chapter, previous build step</li>" +
             "<li><code>?</code> Hide/Show Help</li>" +
-        "</ul>";    
+        "</ul>";
+
+    // Display at startup
+    services.showHide(10);
 })();
