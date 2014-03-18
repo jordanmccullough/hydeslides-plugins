@@ -1,6 +1,4 @@
 (function(){
-
-
     var headTag = document.getElementsByTagName("head")[0];
         bodyTag = document.getElementsByTagName("body")[0];
         cssTag = document.createElement("link");
@@ -36,7 +34,7 @@
       }
 
       if(helpTarget.getAttribute("class").match("hidden")){
-          helpTarget.setAttribute("class");
+          helpTarget.setAttribute("class", "");
       }
       else{
           helpTarget.setAttribute("class", "help-hidden");
