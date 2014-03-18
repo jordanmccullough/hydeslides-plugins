@@ -94,6 +94,7 @@
             "<li><code>&#x2192;</code> Next chapter, next build step</li>" +
             "<li><code>&#x2193;</code> Next slide, next build step</li>" +
             "<li><code>&#x2190;</code> Previous chapter, previous build step</li>" +
+            "<li><code>alt</code>+<code>click</code> Zoom in on slide content</li>" +
             "<li><code>?</code> Hide/Show Help</li>" +
         "</ul>";
 
